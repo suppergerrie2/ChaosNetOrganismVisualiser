@@ -1,4 +1,4 @@
-var neuronSize = 50;
+var neuronSize = 25;
 
 var organism;
 
@@ -8,7 +8,7 @@ function setup() {
     fileInput.position(windowWidth - fileInput.width, 10);
 
     createCanvas(windowWidth-fileInput.width, windowHeight);
-    loadJSON("adam-0.json", receivedOrganism);
+    loadJSON("test-files/DELETEME.json", receivedOrganism);
 }
 
 function draw() {
@@ -33,11 +33,7 @@ function receivedOrganism(data) {
         }
     }
 
-    console.log(data);
-
     organism = new Organism(data);
-    console.log(organism);
-
 }
 
 function handleFileUpload(data) {
