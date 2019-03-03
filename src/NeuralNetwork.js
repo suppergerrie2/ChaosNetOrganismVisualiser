@@ -75,6 +75,7 @@ class NeuralNetwork {
                 neuron.render();
             } else {
                 if (dist(neuron.x, neuron.y, mouseX, mouseY) < neuronSize / 2) {
+					
                     neuron.render(true);
                 }
             }
@@ -84,8 +85,15 @@ class NeuralNetwork {
     isPosOnNeuron(x, y) {
         for (let neuronId in this.neurons) {
             let neuron = this.neurons[neuronId];
-
+			
+			
             if (dist(neuron.x, neuron.y, x, y) < neuronSize / 2) {
+				stroke(255, 255, 255);
+				strokeWeight(0);
+				text(neuron.$TYPE, (neuron.x - 100), neuron.y + neuronSize);
+				
+
+
                 return true;
             }
         }

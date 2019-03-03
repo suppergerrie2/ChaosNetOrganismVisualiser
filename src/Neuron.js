@@ -1,6 +1,7 @@
 class Neuron {
     constructor(json) {
         this.$TYPE = json.$TYPE;
+		
         this.dependencies = [];
 
         for (let dependencyJson of json.dependencies) {
@@ -12,7 +13,8 @@ class Neuron {
         this._base_type = json._base_type;
         this.x = width / 2;
         this.y = height / 2;
-
+		this.attributeValue = json.attributeValue;
+		this.weight = json.weight;
         this.distanceFromInput = this.distanceFromOutput = -1;
     }
 
@@ -23,14 +25,9 @@ class Neuron {
         ellipse(this.x, this.y, neuronSize);
 
         fill(255, 255, 0);
-        // text(this.distanceFromInput, this.x - neuronSize / 2, this.y - neuronSize / 2);
-        // text(this.distanceFromOutput, this.x - neuronSize / 2, this.y + neuronSize / 2);
-
-        if (this.layer) {
-            text(this.layer, this.x - neuronSize / 2, this.y + neuronSize / 2);
-        }
-
+		
         for (let dependency of this.dependencies) {
+
             dependency.render(this, renderNeuronChain);
         }
     }
@@ -64,10 +61,16 @@ class Connection {
     render(out, renderInNeuron) {
         if (renderInNeuron) {
             this.neuron.render(renderInNeuron);
+			stroke(255, 255, 255);
+			strokeWeight(0);
+				if(this.neuron._base_type === "middle") {
+				text(this.weight, (this.neuron.x - neuronSize) + 2, this.neuron.y - neuronSize / 2);
+				} else {
+				text(this.neuron.attributeValue + " " + this.weight, (this.neuron.x - neuronSize) + 2, this.neuron.y - neuronSize / 2);
         }
-
+	}
         stroke(this.weight < 0 ? 255 : 0, this.weight > 0 ? 255 : 0, 0);
-        strokeWeight(Math.max(0.5, Math.abs(this.weight) * 5));
+        strokeWeight(2);
         line(this.neuron.x, this.neuron.y, out.x, out.y);
     }
 }
